@@ -86,6 +86,7 @@ class LoginPage extends StatelessWidget {
                 hintText: 'ejemplo@correo.com',
                 labelText: 'Correo electrónico',
                 counterText: snapshot.data,
+                errorText: snapshot.error,
               ),
               onChanged: (value) => bloc.changeEmail(value),
               //o se puede utilizar bloc.changeEmail
