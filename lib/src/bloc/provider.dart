@@ -5,10 +5,23 @@ export 'package:flutter_form_validation/src/bloc/login_bloc.dart';
 //provider puede manejar multiples instancias de bloc, puede manejar todo en un solo lugar
 //este será nuestro InheritedWidget personalizado nuestro padre de la app
 class Provider extends InheritedWidget {
-//
+  //este código nos ayuda a poder guardar los cambios que se encuentran
+  //escritos en los imputs, así si se hace un hor reload no se perdera la info que ya se haya escrito
+  static Provider _instance;
+
+  factory Provider({Key key, Widget child}) {
+    if (_instance == null) {
+      _instance = new Provider._internal(
+        key: key,
+        child: child,
+      );
+    }
+    return _instance;
+  }
+
+  Provider._internal({Key key, Widget child}) : super(key: key, child: child);
+
   final loginBloc = LoginBloc();
-  //
-  Provider({Key key, Widget child}) : super(key: key, child: child);
 
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) => true;
