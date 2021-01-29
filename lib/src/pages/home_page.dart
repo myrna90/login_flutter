@@ -3,6 +3,8 @@ import 'package:flutter_form_validation/src/bloc/provider.dart';
 import 'package:flutter_form_validation/src/models/product_model.dart';
 import 'package:flutter_form_validation/src/providers/products_provider.dart';
 
+import '../models/product_model.dart';
+
 class HomePage extends StatelessWidget {
   final productProvider = new ProductsProvider();
   @override
@@ -22,13 +24,42 @@ class HomePage extends StatelessWidget {
       builder:
           (BuildContext context, AsyncSnapshot<List<ProductModel>> snapshot) {
         if (snapshot.hasData) {
-          return Container();
+          final products = snapshot.data;
+          return ListView.builder(
+            itemCount: products.length,
+            itemBuilder: (context, i) => _createItem(context, products[i]),
+          );
         } else {
           return Center(
             child: CircularProgressIndicator(),
           );
         }
       },
+    );
+  }
+
+  //separación del item del listado
+  Widget _createItem(BuildContext context, ProductModel product) {
+    return Dismissible(
+      key: UniqueKey(),
+      background: Container(
+        color: Colors.red,
+      ),
+      onDismissed: (direction) {
+        //TODO: borrar producto
+        productProvider.deleteProduct(product.id);
+      },
+      child: ListTile(
+        title: Text('${product.title} - ${product.acres}'),
+        subtitle: Column(
+          children: [
+            Text('${product.id}'),
+            Text('${product.description}'),
+          ],
+        ),
+        onTap: () =>
+            Navigator.pushNamed(context, '/producto', arguments: product),
+      ),
     );
   }
 

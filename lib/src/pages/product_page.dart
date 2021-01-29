@@ -4,6 +4,8 @@ import 'package:flutter_form_validation/src/models/product_model.dart';
 import 'package:flutter_form_validation/src/providers/products_provider.dart';
 import 'package:flutter_form_validation/src/utils/utils.dart' as utils;
 
+import '../models/product_model.dart';
+
 class ProductPage extends StatefulWidget {
   @override
   _ProductPageState createState() => _ProductPageState();
@@ -11,12 +13,21 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   final formKey = GlobalKey<FormState>();
+  final scaffolKey = GlobalKey<ScaffoldState>();
   final productProvider = new ProductsProvider();
 
   ProductModel product = new ProductModel();
+  bool _saving = false;
   @override
   Widget build(BuildContext context) {
+    final ProductModel prodData = ModalRoute.of(context).settings.arguments;
+
+    if (prodData != null) {
+      product = prodData;
+    }
+
     return Scaffold(
+      key: scaffolKey,
       appBar: AppBar(
         title: Text('Productos'),
         actions: [
@@ -85,6 +96,7 @@ class _ProductPageState extends State<ProductPage> {
 
   Widget _createDescription() {
     return TextFormField(
+      initialValue: product.description,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(labelText: 'Descripción'),
       onSaved: (value) => product.description = value,
@@ -114,7 +126,7 @@ class _ProductPageState extends State<ProductPage> {
       textColor: Colors.white,
       label: Text('Guardar'),
       icon: Icon(Icons.save),
-      onPressed: _submit,
+      onPressed: (_saving) ? null : _submit,
     );
   }
 
@@ -122,11 +134,31 @@ class _ProductPageState extends State<ProductPage> {
     //condición si el formularios es valido
     if (!formKey.currentState.validate()) return;
     formKey.currentState.save();
-    print(product.title);
-    print(product.acres);
-    print(product.description);
-    print(product.approved);
 
-    productProvider.createProduct(product);
+    setState(() {
+      _saving = true;
+    });
+
+    if (product.id == null) {
+      productProvider.createProduct(product);
+    } else {
+      productProvider.editProduct(product);
+    }
+
+    // setState(() {
+    //   _saving = false;
+    // });
+
+    viewSnackbar('Registro guardado');
+
+    Navigator.pop(context);
+  }
+
+  void viewSnackbar(String message) {
+    final snackbar = SnackBar(
+      content: Text(message),
+      duration: Duration(milliseconds: 1500),
+    );
+    scaffolKey.currentState.showSnackBar(snackbar);
   }
 }

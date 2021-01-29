@@ -14,7 +14,7 @@ class ProductModel {
     this.id,
     this.title = '',
     this.acres = 0.0,
-    this.description,
+    this.description = '',
     this.photoUrl,
     this.approved = true,
   });
@@ -36,7 +36,7 @@ class ProductModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        //"id": id,
         "title": title,
         "acres": acres,
         "description": description,
