@@ -22,13 +22,25 @@ class HomePage extends StatelessWidget {
       builder:
           (BuildContext context, AsyncSnapshot<List<ProductModel>> snapshot) {
         if (snapshot.hasData) {
-          return Container();
+          final products = snapshot.data;
+          return ListView.builder(
+            itemCount: products.length,
+            itemBuilder: (context, i) => _createItem(context, products[i]),
+          );
         } else {
           return Center(
             child: CircularProgressIndicator(),
           );
         }
       },
+    );
+  }
+
+  Widget _createItem(BuildContext context, ProductModel product) {
+    return ListTile(
+      title: Text('${product.title} - ${product.acres}'),
+      subtitle: Text('${product.id} - ${product.description}'),
+      onTap: () => Navigator.pushNamed(context, '/producto'),
     );
   }
 

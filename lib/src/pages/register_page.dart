@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_validation/src/bloc/provider.dart';
 import 'package:flutter_form_validation/src/providers/user_provider.dart';
 
-class LoginPage extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
   final userProvider = new UserProvider();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +47,7 @@ class LoginPage extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Ingreso',
+                  'Registro',
                   style: TextStyle(fontSize: 20.0),
                 ),
                 SizedBox(height: 60.0),
@@ -63,9 +64,8 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           FlatButton(
-            onPressed: () =>
-                Navigator.pushReplacementNamed(context, '/registro'),
-            child: Text('¿Olvido la contraseña?'),
+            onPressed: () => Navigator.pushReplacementNamed(context, '/login'),
+            child: Text('¿Ya tienes cuenta?, Login'),
           ),
           SizedBox(
             height: 100.0,
@@ -134,21 +134,21 @@ class LoginPage extends StatelessWidget {
           return RaisedButton(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-              child: Text('Ingresar'),
+              child: Text('Registrar'),
             ),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0)),
             elevation: 0.0,
             color: Colors.lightGreen,
             textColor: Colors.white,
-            onPressed: snapshot.hasData ? () => _login(bloc, context) : null,
+            onPressed: snapshot.hasData ? () => _register(bloc, context) : null,
           );
         });
   }
 
 //este metodo es para poder recuperar el último valor emitido en el formulario
-  _login(LoginBloc bloc, BuildContext context) {
-    userProvider.login(bloc.email, bloc.password);
+  _register(LoginBloc bloc, BuildContext context) {
+    userProvider.newUser(bloc.email, bloc.password);
     // Navigator.pushReplacementNamed(context, '/home');
   }
 
