@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_validation/src/bloc/provider.dart';
+import 'package:flutter_form_validation/src/providers/user_provider.dart';
 
 class LoginPage extends StatelessWidget {
+  final userProvider = new UserProvider();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,9 +63,9 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           FlatButton(
-            child: Text('Registrarse'),
             onPressed: () =>
                 Navigator.pushReplacementNamed(context, '/registro'),
+            child: Text('¿Olvido la contraseña?'),
           ),
           SizedBox(
             height: 100.0,
@@ -146,11 +148,8 @@ class LoginPage extends StatelessWidget {
 
 //este metodo es para poder recuperar el último valor emitido en el formulario
   _login(LoginBloc bloc, BuildContext context) {
-    print('===========');
-    print('Email: ${bloc.email}');
-    print('Password: ${bloc.password}');
-    print('===========');
-    Navigator.pushReplacementNamed(context, '/home');
+    userProvider.login(bloc.email, bloc.password);
+    // Navigator.pushReplacementNamed(context, '/home');
   }
 
   Widget _createFund(BuildContext context) {

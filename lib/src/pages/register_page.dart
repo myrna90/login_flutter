@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_validation/src/bloc/provider.dart';
+import 'package:flutter_form_validation/src/providers/user_provider.dart';
 
 class RegisterPage extends StatelessWidget {
+  final userProvider = new UserProvider();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +47,7 @@ class RegisterPage extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Registrarse',
+                  'Registro',
                   style: TextStyle(fontSize: 20.0),
                 ),
                 SizedBox(height: 60.0),
@@ -61,8 +64,8 @@ class RegisterPage extends StatelessWidget {
             ),
           ),
           FlatButton(
-            child: Text('¿Ya tienes cuenta? Login'),
             onPressed: () => Navigator.pushReplacementNamed(context, '/login'),
+            child: Text('¿Ya tienes cuenta?, Login'),
           ),
           SizedBox(
             height: 100.0,
@@ -131,38 +134,35 @@ class RegisterPage extends StatelessWidget {
           return RaisedButton(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-              child: Text('Ingresar'),
+              child: Text('Registrar'),
             ),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0)),
             elevation: 0.0,
             color: Colors.lightGreen,
             textColor: Colors.white,
-            onPressed: snapshot.hasData ? () => _login(bloc, context) : null,
+            onPressed: snapshot.hasData ? () => _register(bloc, context) : null,
           );
         });
   }
 
 //este metodo es para poder recuperar el último valor emitido en el formulario
-  _login(LoginBloc bloc, BuildContext context) {
-    print('===========');
-    print('Email: ${bloc.email}');
-    print('Password: ${bloc.password}');
-    print('===========');
-    Navigator.pushReplacementNamed(context, '/home');
+  _register(LoginBloc bloc, BuildContext context) {
+    userProvider.newUser(bloc.email, bloc.password);
+    // Navigator.pushReplacementNamed(context, '/home');
   }
 
   Widget _createFund(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    // var linearGradient = LinearGradient(colors: <Color>[
-    //   Color.fromRGBO(17, 150, 8, 1.0),
-    //   Color.fromRGBO(9, 104, 3, 1.0)
-    // ]);
     final fundGreen = Container(
       height: size.height * 0.4,
       width: double.infinity,
-      decoration: BoxDecoration(color: Colors.lightGreen),
+      decoration: BoxDecoration(
+          gradient: LinearGradient(colors: <Color>[
+        Color.fromRGBO(17, 150, 8, 1.0),
+        Color.fromRGBO(9, 104, 3, 1.0)
+      ])),
     );
 
     final circle = Container(
