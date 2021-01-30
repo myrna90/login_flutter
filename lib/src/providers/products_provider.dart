@@ -4,8 +4,6 @@
 import 'dart:convert';
 import 'package:flutter_form_validation/src/models/product_model.dart';
 import 'package:http/http.dart' as http;
-
-import '../models/product_model.dart';
 import '../models/product_model.dart';
 
 class ProductsProvider {
