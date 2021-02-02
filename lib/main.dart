@@ -19,14 +19,17 @@ class MyHttpOverrides extends HttpOverrides {
 
 void main() async {
   HttpOverrides.global = new MyHttpOverrides();
-  final prefs = new UserPreferences();
+  // WidgetsFlutterBinding.ensureInitialized();
+  // final prefs = new UserPreferences();
+  // await prefs.initPrefs();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final prefs = new UserPreferences();
+    //final prefs = new UserPreferences();
+    //print(prefs.nombre);
     //este es el padre de toda la app
     //con la implementación del Provider este pasa a
     //ser el padre de toda la App y materialApp pasa a ser su hijo.

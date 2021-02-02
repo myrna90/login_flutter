@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_validation/src/bloc/provider.dart';
 import 'package:flutter_form_validation/src/providers/user_provider.dart';
+import 'package:flutter_form_validation/src/utils/utils.dart';
 
 class LoginPage extends StatelessWidget {
   final userProvider = new UserProvider();
@@ -148,12 +149,12 @@ class LoginPage extends StatelessWidget {
 
 //este metodo es para poder recuperar el último valor emitido en el formulario
   _login(LoginBloc bloc, BuildContext context) async {
-    Map info = await userProvider.login(bloc.email, bloc.password);
+    final info = await userProvider.login(bloc.email, bloc.password);
 
-    if (info['ok']) {
+    if (info[0]['usuario'] != null) {
       Navigator.pushReplacementNamed(context, '/home');
     } else {
-      //_viewAlert();
+      viewAlert(context, 'Información incorrecta');
     }
   }
 

@@ -16,12 +16,12 @@ class UserPreferences {
   }
 
   // GET y SET del name
-  get token {
-    return _prefs.getString('token') ?? '';
+  get nombre {
+    return _prefs.getString('nombre') ?? '';
   }
 
-  set token(String value) {
-    _prefs.setString('token', value);
+  set nombre(String value) {
+    _prefs.setString('nombre', value);
   }
 
   // GET y SET de la última página
