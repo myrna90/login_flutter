@@ -20,10 +20,11 @@ class UserProvider {
     );
 
     if (resp.statusCode == 200) {
-      //print(json.decode(resp.body));
+      print(json.decode(resp.body));
       return json.decode(resp.body);
     } else {
       print(resp.statusCode);
+      return resp.statusCode;
     }
   }
 

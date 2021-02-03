@@ -175,8 +175,9 @@ class LoginPage extends StatelessWidget {
       width: 100.0,
       height: 100.0,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100.0),
-          color: Color.fromRGBO(255, 255, 255, 0.05)),
+        borderRadius: BorderRadius.circular(100.0),
+        color: Color.fromRGBO(255, 255, 255, 0.05),
+      ),
     );
     return Stack(
       children: [
